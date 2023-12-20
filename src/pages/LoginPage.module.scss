@@ -1,0 +1,40 @@
+.radioWrapperDiv {
+    display: flex;
+}
+
+.radioContainerDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.errorWrapperDiv {
+    background: #dd3b3b;
+    color: black;
+    width: 30%;
+    margin: 0 0 10px 0;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.passwordWrapperDiv {
+    position: relative;
+
+    button {
+        margin: 0;
+        padding: 8px;
+        color: darkgrey;
+        background: #e8f0ff;
+        border: none;
+        cursor: pointer;
+        position: absolute;
+        right: -18px;
+        top: 8%;
+
+        &:hover {
+            background: white;
+        }
+    }
+}
+
