@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import classes from './LoginPage.module.scss';
-import {cryptPassword} from "../utils/helpers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 
@@ -10,7 +9,6 @@ export default function LoginPage(props) {
         email: "",
         password: ""
     });
-    const [initialPassword, setInitialPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [showPassword, setShowPassword] = useState(false);
@@ -39,28 +37,20 @@ export default function LoginPage(props) {
         });
     };
 
-    const setHashedPassword = async password => {
-        user.password = await cryptPassword(password);
-    }
-
-    const resetInitialPassword = () => {
-        setUser({
-            ...user,
-            password: initialPassword
-        });
-    }
-
     const navigateToSignUpWithUserData = userData => {
         navigate('/signup', { state: { userData: userData } });
     }
 
     const submitLogin = async () => {
         const response = await fetch(
-            'http://localhost:8888/final-project-back-end/public/user/login.php',
+            'http://localhost:3001/user/login',
             {
                 method: "POST",
                 mode: "cors",
                 credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
                 body: JSON.stringify(user)
             });
         const data = await response.json();
@@ -69,7 +59,6 @@ export default function LoginPage(props) {
             navigateToSignUpWithUserData(data.userData);
         } else {
             setIsLoading(false);
-            resetInitialPassword();
             setMessage(data.message);
         }
     }
@@ -77,8 +66,6 @@ export default function LoginPage(props) {
     const handleSubmit = async e => {
         e.preventDefault();
         setIsLoading(true);
-        setInitialPassword(user.password);
-        await setHashedPassword(user.password);
         await submitLogin();
     }
 
