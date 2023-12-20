@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import classes from './LoginPage.module.scss';
-import {cryptPassword} from "../utils/helpers";
 
 function SignUpPage() {
     const [user, setUser] = useState({
@@ -47,18 +46,12 @@ function SignUpPage() {
         return password === confirmPassword;
     }
 
-    const setHashedPassword = async password => {
-        const hashedPassword = await cryptPassword(password);
-        user.password = hashedPassword;
-        user.confirmPassword = hashedPassword;
-    }
-
     const navigateToLoginWithMessage = message => {
         navigate('/login', {state: {message: message}});
     }
 
     const submitSignUp = async () => {
-        const response = await fetch('http://localhost:8888/final-project-back-end/public/user/signup.php', {
+        const response = await fetch('http://localhost:3001/user/signup', {
             mode: "cors",
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -81,9 +74,17 @@ function SignUpPage() {
             return;
         }
 
-        if (await validatePassword(user.password, user.confirmPassword)) {
-            await setHashedPassword(user.password);
-        } else {
+        if (user.password.length < 8) {
+            setIsLoading(false);
+            setError("Password must be at least 8 characters");
+            return;
+        }
+
+        if (!user.password.match(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])[0-9a-zA-Z!@#$%^&*]{8,}$/)) {
+            setIsLoading(false);
+            setError("Password must contain at least one number, one special character, one uppercase letter, and one lowercase letter");
+            return;
+        } else if (!(await validatePassword(user.password, user.confirmPassword))) {
             setIsLoading(false);
             setError("Passwords do not match");
             return;
