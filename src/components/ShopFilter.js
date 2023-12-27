@@ -10,14 +10,10 @@ export default function ShopFilter({ currentLocation, setFilteredShops, onDistan
     useEffect(() => {
         const fetchCategories = async () => {
             const response = await fetch(
-                'http://localhost:8888/final-project-back-end/public/category/get-categories.php'
+                'http://localhost:3001/category/all'
             );
             const data = await response.json();
-            const options = data.categories.map(([value, label]) => ({
-                value,
-                label,
-            }));
-            setCategories(options);
+            setCategories(data.categories);
         };
         fetchCategories().then(() => {});
     }, []);
@@ -77,10 +73,10 @@ export default function ShopFilter({ currentLocation, setFilteredShops, onDistan
                 <Select
                     isMulti
                     placeholder={'Select categories...'}
-                    options={categories}
+                    options={categories.map(({id, name}) => ({value: id, label: name}))}
                     onChange={handleCategoryChange}
                     value={categories.filter((option) =>
-                        selectedCategories.includes(parseInt(option.value))
+                        selectedCategories.includes(option.value)
                     )}
                 />
             ) : null}

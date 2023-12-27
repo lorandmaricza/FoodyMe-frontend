@@ -1,7 +1,5 @@
-import bcrypt from "bcryptjs";
-
 export const checkSession = async () => {
-    const response = await fetch('http://localhost:8888/final-project-back-end/public/check-session.php', {
+    const response = await fetch('http://localhost:3001/session', {
         credentials: 'include'
     });
 
@@ -13,7 +11,7 @@ export const checkSession = async () => {
 }
 
 export const fetchCategories = async (setCategories) => {
-    const response = await fetch('http://localhost:8888/final-project-back-end/public/category/get-categories.php', {
+    const response = await fetch('http://localhost:3001/category/all', {
         method: "POST",
         mode: "cors",
         credentials: 'include'
@@ -26,12 +24,5 @@ export const fetchCategories = async (setCategories) => {
     const data = await response.json();
     if (data.status === 'success') {
         setCategories(data.categories);
-    } else {
-        console.log('sth wrong');
     }
-}
-
-export const cryptPassword = async password => {
-    const salt = await bcrypt.genSalt();
-    return await bcrypt.hash(password, salt);
 }

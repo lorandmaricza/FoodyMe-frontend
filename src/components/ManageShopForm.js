@@ -84,7 +84,7 @@ export default function ManageShopForm(props) {
 
         if (shopId !== null) {
             fetchShops().then((categoriesShop) => {
-                setCheckedCategories(categoriesShop.map((category) => category.id.toString()));
+                setCheckedCategories(categoriesShop.map((category) => category.id));
             });
         }
     }, [shopId]);
@@ -278,14 +278,14 @@ export default function ManageShopForm(props) {
                     <div>
                         <input
                             type="checkbox"
-                            key={category[0]}
-                            id={category[0]}
-                            name={category[1]}
+                            key={category.id}
+                            id={category.id}
+                            name={category.name}
                             className={classes.inputCheckbox}
                             onChange={handleCategoryCheck}
-                            checked={shopId && checkedCategories.some((categoryShop) => categoryShop === category[0])}
+                            checked={shopId && checkedCategories.some((categoryShop) => categoryShop === category.id)}
                         />
-                        <label htmlFor={category[1]}>{category[1]}</label>
+                        <label htmlFor={category.name}>{category.name}</label>
                     </div>
                 ))
             }

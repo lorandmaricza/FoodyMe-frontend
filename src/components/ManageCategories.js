@@ -118,10 +118,10 @@ function ManageCategories() {
                 </thead>
                 <tbody>
                 {categories.map(category => (
-                    <tr key={category[0]}>
-                        <td>{category[1]}</td>
-                        <td><button onClick={() => loadUpdateCategory(category[0], category[1])}>update</button></td>
-                        <td><button onClick={() => handleDeleteCategory(category[0])}>delete</button></td>
+                    <tr key={category.id}>
+                        <td>{category.name}</td>
+                        <td><button onClick={() => loadUpdateCategory(category.id, category.name)}>update</button></td>
+                        <td><button onClick={() => handleDeleteCategory(category.id)}>delete</button></td>
                     </tr>
                 ))}
                 </tbody>
