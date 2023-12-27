@@ -37,7 +37,7 @@ export default function Map(props) {
     const [shops, setShops] = useState([]);
     const [filteredShops, setFilteredShops] = useState([]);
     const mapRef = useRef(null);
-    const { id: userId, role_id: roleId} = props.userData;
+    const { id: userId, roleId} = props.user;
     const [mapLocation, setMapLocation] = useState([lat, lng]);
     const [userLocationMarker, setUserLocationMarker] = useState(null);
     const userLocationMarkerRef = useRef(userLocationMarker);

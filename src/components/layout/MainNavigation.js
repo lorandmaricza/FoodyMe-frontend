@@ -11,7 +11,7 @@ function MainNavigation(props) {
 
     useEffect(() => {
         checkSession().then((data) => {
-            if (data.status === "logged_in") {
+            if (data.loggedIn) {
                 props.setLoggedIn(true);
             }
         }).catch(error => console.log(error));

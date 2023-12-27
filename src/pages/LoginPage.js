@@ -37,10 +37,6 @@ export default function LoginPage(props) {
         });
     };
 
-    const navigateToSignUpWithUserData = userData => {
-        navigate('/signup', { state: { userData: userData } });
-    }
-
     const submitLogin = async () => {
         const response = await fetch(
             'http://localhost:3001/user/login',
@@ -56,7 +52,7 @@ export default function LoginPage(props) {
         const data = await response.json();
         if (data.status === "success") {
             props.setLoggedIn(true);
-            navigateToSignUpWithUserData(data.userData);
+            navigate('/dashboard', { state: { user: data.user } });
         } else {
             setIsLoading(false);
             setMessage(data.message);

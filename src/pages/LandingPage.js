@@ -9,8 +9,8 @@ function LandingPage () {
 
     useEffect(() => {
         checkSession().then((data) => {
-            if (data.status === "logged_in") {
-                navigate('/dashboard', { state: { userData: data.userData } });
+            if (data.loggedIn) {
+                navigate('/dashboard', { state: { user: data.user } });
             } else {
                 navigate('/');
             }

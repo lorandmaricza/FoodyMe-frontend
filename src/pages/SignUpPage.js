@@ -32,7 +32,7 @@ function SignUpPage() {
     };
 
     const validateEmail = async email => {
-        const response = await fetch('http://localhost:8888/final-project-back-end/public/user/validate-email.php', {
+        const response = await fetch('http://localhost:3001/user/email-validate', {
             mode: "cors",
             method: "POST",
             headers: { "Content-Type": "application/json" },

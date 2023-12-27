@@ -5,7 +5,7 @@ import Map from "../components/Map";
 
 export default function Dashboard() {
     const { state } = useLocation();
-    const { userData } = state;
+    const { user } = state;
     const [currentLocation, setCurrentLocation] = useState(null);
 
     useEffect(() => {
@@ -27,10 +27,10 @@ export default function Dashboard() {
         fetchCurrentLocation();
     }, []);
 
-    if (userData.role_id === 3) {
+    if (user.roleId === 3) {
         return <ManageCategories />;
-    } else if (userData.role_id === 1 || userData.role_id === 2) {
-        return <Map userData={userData} currentLocation={currentLocation} />;
+    } else if (user.roleId === 1 || user.roleId === 2) {
+        return <Map user={user} currentLocation={currentLocation} />;
     } else {
         return null;
     }
